@@ -1,0 +1,22 @@
+.weather-details-container {
+    width: 60%;
+    margin: auto;
+    text-align: center;
+  
+    .weather-info {
+      margin: 20px 0;
+      p {
+        font-size: 1.2rem;
+      }
+    }
+  
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  

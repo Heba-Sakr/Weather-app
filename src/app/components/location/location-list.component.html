@@ -1,0 +1,20 @@
+<!-- location-list.component.html -->
+<div class="location-list-container">
+    <h1>Your Locations</h1>
+  
+    <!-- Add Location Form -->
+    <form (submit)="addLocation()">
+      <input type="text" [(ngModel)]="newLocation" [ngModelOptions]="{standalone: true}" placeholder="Enter City Name" required />
+      <button type="submit">Add Location</button>
+    </form>
+  
+    <!-- Saved Locations -->
+    <ul class="location-list">
+      <li *ngFor="let location of locations">
+        <span (click)="viewWeather(location.name)" class="location-name">{{ location.name }}</span>
+        <button (click)="deleteLocation(location._id)">Delete</button>
+
+      </li>
+    </ul>
+  </div>
+  

@@ -1,9 +1,11 @@
 {
-  "name": "weather-app-backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.js",   
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +16,9 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
-    "mongoose": "^8.8.2"
+    "mongoose": "^8.8.2",
+    "dotenv": "^16.1.4",
+    "node-fetch": "^2.6.7"
   }
 }
+
