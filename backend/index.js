@@ -8,11 +8,11 @@ const weatherRoutes = require('./routes/weatherRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const API_KEY = process.env.WEATHER_API_KEY
+
 
 //Checking .env
-console.log('the ports is: ',PORT)
-console.log('API_KEY:', API_KEY);
+console.log('the ports is: ',process.env.PORT)
+console.log('API_KEY:',  process.env.WEATHER_API_KEY);
 console.log('mongo:', process.env.MONGODB_URI);
 
 // Middleware
@@ -22,6 +22,7 @@ app.use(cors());
 // Register Routes
 app.use('/api/weather', weatherRoutes);
 app.use('/locations', locationRoutes);  
+app.use('/locations', weatherRoutes); // Mount the weatherRoutes on /locations
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/weather-app', {

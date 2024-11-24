@@ -12,6 +12,22 @@ router.get('/', async (_req, res) => {
   }
 });
 
+// Route to get the latest location
+router.get('/latest', async (req, res) => {
+  try {
+    const latestLocation = await Location.findOne().sort({ _id: -1 }); // Get the latest saved location
+    if (latestLocation) {
+      res.json(latestLocation); // Send the latest location data as JSON
+    } else {
+      res.status(404).json({ message: 'No locations found' });
+    }
+  } catch (err) {
+    console.error('Error fetching latest location:', err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 // Add a new city
 router.post('/', async (req, res) => {
   const { name } = req.body;

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from 'src/app/services/location.service';
+import { HttpClient } from '@angular/common/http';
+import { WeatherService } from 'src/app/services/weather.service';
 
 @Component({
   selector: 'app-location-list',
@@ -15,14 +17,42 @@ import { LocationService } from 'src/app/services/location.service';
 export class LocationListComponent {
   newLocation: string = '';
   locations: any[] = [];
+  private backendBaseUrl = 'http://localhost:3000/locations';
+  latestCityWeather: any = null; // Holds weather data for the latest city
+
 
   constructor(
     private locationService: LocationService,
-    private router: Router
+    private weatherService: WeatherService,
+    private route: ActivatedRoute,
+    private http: HttpClient,
   ) {}
 
   ngOnInit(): void {
     this.getSavedLocations();  // Get saved locations when the component is initialized
+    this.getLastLocation(); // Fetch weather for the latest city
+
+  }
+  getLastLocation(): void {
+    this.http.get(`${this.backendBaseUrl}/latest`).subscribe(
+      (latestLocation: any) => {
+        if (latestLocation?.name) {
+          this.weatherService.getWeatherByCity(latestLocation.name).subscribe(
+            (weatherData) => {
+              this.latestCityWeather = weatherData; // Store weather data
+            },
+            (error) => {
+              console.error('Error fetching weather for latest city:', error);
+            }
+          );
+        } else {
+          console.log('No latest location found');
+        }
+      },
+      (error) => {
+        console.error('Error fetching latest location:', error);
+      }
+    );
   }
 
   addLocation(): void {
@@ -35,9 +65,9 @@ export class LocationListComponent {
     }
   }
 
-  viewWeather(cityName: string): void {
-    console.log('Navigating to weather page for:', cityName); // Debug log
-    this.router.navigate(['/weather', cityName]);
+   // Navigate to weather details for a selected location
+   viewWeather(cityName: string): void {
+    window.location.href = `/weather/${cityName}`;
   }
   
   getSavedLocations(): void {

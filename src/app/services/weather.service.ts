@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class WeatherService {
   // Backend API base URL
-  private BACKEND_BASE_URL = 'http://localhost:3000/api/weather'; 
+  private baseURL = 'http://localhost:3000/api/weather'; 
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +18,6 @@ export class WeatherService {
    */
   getWeatherByCity(cityName: string): Observable<any> {
     // Make the HTTP GET request to the backend with the city name as part of the URL
-    return this.http.get(`${this.BACKEND_BASE_URL}/${cityName}`);
+    return this.http.get(`${this.baseURL}/${cityName}`);
   }
 }

@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 export const routes: Routes = [
   { path: '', component: LocationListComponent },
   { path: 'weather/:name', component: WeatherDetailsComponent },
+  { path: '**', redirectTo: '' }, // Redirect unknown routes to the default view
 ];
 
 @NgModule({
